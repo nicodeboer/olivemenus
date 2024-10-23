@@ -16,6 +16,7 @@ use olivestudio\olivemenus\records\OlivemenusItemsRecord;
 
 use Craft;
 use craft\base\Component;
+use craft\db\Table;
 use craft\elements\Entry;
 use craft\elements\Category;
 
@@ -167,24 +168,24 @@ class OlivemenuItemsService extends Component
 
         $sections['single'] = (new \craft\db\Query())
             ->select(["name AS name", "handle AS handle"])
-            ->from(['{{%sections}}'])
-            ->leftJoin('{{%sections_sites}}', '{{%sections_sites}}.sectionId = {{%sections}}.id')
+            ->from(['sections' => Table::SECTIONS])
+            ->leftJoin(['sections_sites' => Table::SECTIONS_SITES], '[[sections_sites.sectionId]] = [[sections.id]]')
             ->where(['type' => 'single', 'dateDeleted'=>NULL, 'siteId' => $site_id])
             ->orderBy('name')
             ->all();
 
         $sections['structure'] = (new \craft\db\Query())
             ->select(["name AS name", "handle AS handle"])
-            ->from(['{{%sections}}'])
-            ->leftJoin('{{%sections_sites}}', '{{%sections_sites}}.sectionId = {{%sections}}.id')
+            ->from(['sections' => Table::SECTIONS])
+            ->leftJoin(['sections_sites' => Table::SECTIONS_SITES], '[[sections_sites.sectionId]] = [[sections.id]]')
             ->where(['type' => 'structure', 'dateDeleted'=>NULL, 'siteId' => $site_id])
             ->orderBy('name')
             ->all();
 
         $sections['channel'] = (new \craft\db\Query())
             ->select(["name AS name", "handle AS handle"])
-            ->from(['{{%sections}}'])
-            ->leftJoin('{{%sections_sites}}', '{{%sections_sites}}.sectionId = {{%sections}}.id')
+            ->from(['sections' => Table::SECTIONS])
+            ->leftJoin(['sections_sites' => Table::SECTIONS_SITES], '[[sections_sites.sectionId]] = [[sections.id]]')
             ->where(['type' => 'channel', 'dateDeleted'=>NULL, 'siteId' => $site_id])
             ->orderBy('name')
             ->all();
